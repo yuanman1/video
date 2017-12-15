@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "mybatis-3-config.dtd">
+<configuration>
+<!-- 整合spring以后environment配置都在applicationContext中进行配置
+    配置事务，配置连接池，配置驱动，配置url，配置用户名，配置密码，
+    如果有需要，去官方文档粘贴
+ -->
+   <!-- 设置别名 -->
+   <typeAliases>
+        <!--  <typeAlias type="com.zhiyou100.mybatis.model.User" alias="user"/> -->
+  		  <package name="com.zhiyou100.video.model"/> 
+  </typeAliases>  
+  
+</configuration>

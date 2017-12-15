@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+		
+		<context:component-scan base-package="com.zhiyou100.video.web.controller"></context:component-scan>
+		<!-- 配置注解驱动 ，处理器映射器RequestMappingHandlerMapping
+		处理器适配器RequestMappingHandlerAdapter-->
+		<mvc:annotation-driven/>
+		<!-- 配置视图解析器  view-->
+		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/view/"></property>
+		<property name="suffix" value=".jsp"></property>
+		</bean>
+		
+		<!-- 上传头像 -->
+		<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="#{6*1024*1024}"></property>
+		</bean>
+		<!-- 异常处理器 -->
+		 <bean class="com.zhiyou100.video.web.exception.MyException"></bean> 
+		<!-- 后台拦截器 -->
+	    <mvc:interceptors>
+		<mvc:interceptor>
+		<mvc:mapping path="/admin/**"/>
+		<mvc:exclude-mapping path="/admin/login.action"/>
+		<bean class="com.zhiyou100.video.web.interceptor.AdminInterceptor"></bean>
+		</mvc:interceptor>
+		<!-- 前台拦截器 -->
+		</mvc:interceptors>
+		 <mvc:interceptors>
+		<mvc:interceptor>
+		<mvc:mapping path="/front/**"/>
+		<mvc:exclude-mapping path="/front/user/login.action"/>
+		<mvc:exclude-mapping path="/front/course/index.action"/>
+		<mvc:exclude-mapping path="/front/video/index.action"/>
+		<mvc:exclude-mapping path="/front/user/forget.action"/>
+	    <mvc:exclude-mapping path="/front/user/sendemail.action"/>
+	    <mvc:exclude-mapping path="/front/user/resetpwd.action"/>
+		<bean class="com.zhiyou100.video.web.interceptor.FrontInterceptor"></bean>
+		</mvc:interceptor>
+		</mvc:interceptors>
+</beans>
